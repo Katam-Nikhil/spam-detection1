@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="card">
+            <div class="icon">✉</div>
+            <h1>Spam Detection System</h1>
+            <p class="subtitle">Check whether a message is spam or genuine.</p>
+
+            <form method="POST" action="/">
+                <label for="message">Enter your message</label>
+                <textarea id="message" name="message" rows="6"
+                    placeholder="Type or paste your message here..." required>{{ message }}</textarea>
+                <button type="submit">Check Message</button>
+            </form>
+
+            {% if result %}
+            <div class="result {{ result.kind }}" role="status">
+                <strong>{{ result.label }}</strong>
+                {% if result.kind == "spam" %}
+                    <p>Be careful. Avoid clicking unknown links or sharing personal information.</p>
+                {% elif result.kind == "ham" %}
+                    <p>The model did not identify this message as spam.</p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <p class="note">Educational project: predictions are estimates and may not always be correct.</p>
+        </section>
+    </main>
+</body>
+</html>
